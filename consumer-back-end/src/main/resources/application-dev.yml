@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: ${JDBC_URL} # from env variables
+    username: ${JDBC_USERNAME} # from env variables
+    password: ${JDBC_PASSWORD} # from env variables
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: create-drop
+    defer-datasource-initialization: true
+    spring.jpa.database-platform: org.hibernate.dialect.MySQLDialect
+  sql:
+    init:
+      mode: always
+
+logging.level.org.springframework.security: TRACE
