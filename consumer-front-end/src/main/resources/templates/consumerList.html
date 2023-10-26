@@ -1,0 +1,35 @@
+<section class="col-md-12 ms-auto">
+    <table class="table table-dark table-hover table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Province</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="consumer : ${consumerList}">
+                <td th:text="${consumer.id}"></td>
+                <td th:text="${consumer.name}"></td>
+                <td th:text="${consumer.address}"></td>
+                <td th:text="${consumer.city}"></td>
+                <td th:text="${consumer.province}"></td>
+                <td th:text="${consumer.status}"></td>
+                <td>
+                    <button class="btn btn-warning badge-pill">
+                        EDIT
+                    </button>
+                    <button class="btn btn-danger badge-pill"
+                            th:attr="onclick=|btn_delete_onclick(${consumer.id})|"
+                    >
+                        DELETE
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

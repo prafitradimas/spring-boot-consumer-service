@@ -1,0 +1,6 @@
+server:
+  port: 8081
+
+
+
+BACKEND_URL: ${BACKEND_URL} # from env variables

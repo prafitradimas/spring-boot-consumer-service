@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:hx="https://github.com/wimdeblauwe/htmx-spring-boot-thymeleaf" >
+<head>
+    <meta charset="UTF-8">
+    <title>Consumer</title>
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/5.3.0/css/bootstrap.min.css}"/>
+    <script th:src="@{webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js}"></script>
+    <style>
+        #btn-add-consumer {
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <section th:if="${(param.create != null)}">
+        <div th:if="${(param.create[0] == 'success')}" th:text="${alert_message}" class="alert alert-success"></div>
+        <div th:if="${(param.create[0] == 'failed')}" class="alert alert-danger">Failed to create new consumer</div>
+    </section>
+
+    <section th:if="${(param.delete != null)}">
+        <div th:if="${(param.delete[0] == 'success')}" th:text="${alert_message}" class="alert alert-success"></div>
+        <div th:if="${(param.delete[0] == 'failed')}" th:text="${alert_message}" class="alert alert-danger"></div>
+    </section>
+
+    <div class="container">
+        <div class="jumbotron">
+            <div class="card">
+                <div class="card-header">
+                    Data Table
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title">Consumers</h5>
+
+                    <div class="row px-3">
+                        <div class="col-1 offset-md-11">
+                            <button id="btn-add-consumer" class="btn btn-primary badge-pill" type="button" data-bs-toggle="modal" data-bs-target="#modal-create-consumer">ADD</button>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div hx-trigger="load" hx:get="@{/hx/consumers}" hx-swap="outerHTML"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+</main>
+
+<article id="modal-create-consumer">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</article>
+</body>
+</html>
