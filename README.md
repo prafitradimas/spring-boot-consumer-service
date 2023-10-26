@@ -3,10 +3,10 @@
 ## Tools
 
 - Java version 21
-- IDE
-  - Intellij IDEA
 - Maven
-- MySQL Database
+- MySQL
+- Spring Framework
+- Docker
 
 ## Dependency
 
@@ -18,14 +18,13 @@
 - JDBC API
 - Java MySQL Connector
 
-## IMPORTANT!!
+## Installation
 
-Before run the application, you need to add env variable (either using IDE like Intellij IDEA or PATH).
+Docker:
 
-The environment bellow required for running the back-end:
+- clone repo: `$ git clone https://github.com/prafitradimas/spring-boot-consumer-service.git`
+- run `docker-compose`:
 
-```
-JDBC_USERNAME=<your-mysql-username>
-JDBC_PASSWORD=<your-mysql-password>
-JDBC_URL = jdbc:mysql://<your-mysql-host>:<your-jdbc-port>/<your-db-name>
+```sh
+docker-compose up -d
 ```

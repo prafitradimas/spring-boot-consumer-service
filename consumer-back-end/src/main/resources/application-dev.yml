@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: ${JDBC_URL} # from env variables
+    url: ${JDBC_URL}
     username: ${JDBC_USERNAME} # from env variables
     password: ${JDBC_PASSWORD} # from env variables
     driverClassName: com.mysql.cj.jdbc.Driver

@@ -1,0 +1,41 @@
+version: "3"
+
+networks:
+  localnetwork:
+    driver: bridge
+
+services:
+  mysqldb:
+    container_name: mysqldb-compose
+    image: mysql/mysql-server
+    env_file:
+        - ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+    ports:
+      - "3306:3306"
+    networks:
+        - localnetwork
+    volumes:
+      - /home/user123/.docker/mysql:/var/lib/mysql
+
+  backend:
+    container_name: backend
+    build: ./consumer-back-end
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./.env
+    environment:
+        SPRING_APPLICATION_JSON: '{
+          "spring.profiles.active": "${SPRING_APP_PROFILE}"
+        }'
+    volumes:
+      - /home/user123/.m2:/root/.m2
+    stdin_open: true
+    tty: true
+    depends_on:
+      - mysqldb
+    networks:
+        - localnetwork
