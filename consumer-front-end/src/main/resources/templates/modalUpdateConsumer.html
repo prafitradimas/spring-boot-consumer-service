@@ -1,0 +1,56 @@
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+        <form id="modal-update-consumer-form" method="post" th:action="@{/consumers}" th:object="${update_request}">
+            <input id="input-id" hidden type="number" th:field="*{id}">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalUpdateConsumerLabel">UPDATE Consumer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="input-name">name:</label>
+                    <input id="input-name"
+                           type="text"
+                           class="form-control"
+                           placeholder="John Doe"
+                           th:field="*{name}">
+                </div>
+                <div class="mb-3">
+                    <label for="input-address">address:</label>
+                    <input id="input-address"
+                           type="text"
+                           class="form-control"
+                           placeholder="your-address"
+                           th:field="*{address}">
+                </div>
+                <div class="mb-3">
+                    <label for="input-city">city:</label>
+                    <input id="input-city"
+                           type="text"
+                           class="form-control"
+                           placeholder="Yogyakarta"
+                           th:field="*{city}">
+                </div>
+                <div class="mb-3">
+                    <label for="input-province">province:</label>
+                    <input id="input-province"
+                           type="text"
+                           class="form-control"
+                           placeholder="Daerah Istimewa Yogyakarta"
+                           th:field="*{province}">
+                </div>
+                <div class="mb-3">
+                    <label for="input-status">status:</label>
+                    <input id="input-status"
+                           type="text"
+                           class="form-control"
+                           th:field="*{status}">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>

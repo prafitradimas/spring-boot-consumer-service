@@ -2,12 +2,14 @@ package com.github.prafitradimas.consumer.front.end.service;
 
 import com.github.prafitradimas.consumer.front.end.dto.ConsumerDto;
 import com.github.prafitradimas.consumer.front.end.dto.CreateConsumerRequest;
+import com.github.prafitradimas.consumer.front.end.dto.UpdateConsumerRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -32,7 +34,7 @@ public class ConsumerService {
         return (List<ConsumerDto>) responseEntity.getBody().get("data");
     }
 
-    public ConsumerDto createConsumer(CreateConsumerRequest request) {
+    public Map<String, Object> createConsumer(CreateConsumerRequest request) {
         var restTemplate = new RestTemplate();
         String resourceUrl = BACKEND_URL.concat("/api/v1/consumers");
 
@@ -52,7 +54,30 @@ public class ConsumerService {
             return null;
         }
 
-        return (ConsumerDto) responseEntity.getBody().get("data");
+        return (Map<String, Object>) responseEntity.getBody().get("data");
+    }
+
+    public Map<String, Object> updateConsumer(UpdateConsumerRequest request) {
+        var restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+        String resourceUrl = BACKEND_URL.concat("/api/v1/consumers/"+request.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+
+        HttpEntity<UpdateConsumerRequest> httpRequest = new HttpEntity<>(request, headers);
+        ResponseEntity<Map> responseEntity = restTemplate.exchange(
+            resourceUrl,
+            HttpMethod.PATCH,
+            httpRequest,
+            Map.class
+        );
+
+        if (responseEntity.getStatusCode() != HttpStatusCode.valueOf(200)) {
+            // @TODO
+            return null;
+        }
+
+        return (Map<String, Object>) responseEntity.getBody().get("data");
     }
 
     public Boolean deleteConsumer(Integer id) {

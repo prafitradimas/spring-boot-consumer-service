@@ -1,0 +1,48 @@
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+        <form method="post" th:action="@{/consumers}" th:object="${create_request}">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalAddConsumerLabel">ADD Consumer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="input-name">name:</label>
+                    <input id="input-name"
+                           type="text"
+                           class="form-control"
+                           placeholder="John Doe"
+                           th:field="*{name}">
+                </div>
+                <div class="mb-3">
+                    <label for="input-address">address:</label>
+                    <input id="input-address"
+                           type="text"
+                           class="form-control"
+                           placeholder="your-address"
+                           th:field="*{address}">
+                </div>
+                <div class="mb-3">
+                    <label for="input-city">city:</label>
+                    <input id="input-city"
+                           type="text"
+                           class="form-control"
+                           placeholder="Yogyakarta"
+                           th:field="*{city}">
+                </div>
+                <div class="mb-3">
+                    <label for="input-province">province:</label>
+                    <input id="input-province"
+                           type="text"
+                           class="form-control"
+                           placeholder="Daerah Istimewa Yogyakarta"
+                           th:field="*{province}">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
+                <button type="submit" class="btn btn-primary">ADD</button>
+            </div>
+        </form>
+    </div>
+</div>

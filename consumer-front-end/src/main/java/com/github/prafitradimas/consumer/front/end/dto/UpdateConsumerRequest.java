@@ -1,17 +1,22 @@
 package com.github.prafitradimas.consumer.front.end.dto;
 
-public record UpdateConsumerRequest(
-    Integer id,
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    String name,
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UpdateConsumerRequest {
 
-    String address,
+    private Integer id;
+    private String name;
 
-    String city,
+    private String address;
 
-    String province,
+    private String city;
 
-    String status
-) {
+    private String province;
 
+    private String status;
 }

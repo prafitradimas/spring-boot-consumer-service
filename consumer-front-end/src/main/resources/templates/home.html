@@ -7,6 +7,7 @@
     <title>Consumer</title>
     <link th:rel="stylesheet" th:href="@{webjars/bootstrap/5.3.0/css/bootstrap.min.css}"/>
     <script th:src="@{webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js}"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
     <style>
         #btn-add-consumer {
             width: 80px;
@@ -16,13 +17,24 @@
 <body>
 <main>
     <section th:if="${(param.create != null)}">
-        <div th:if="${(param.create[0] == 'success')}" th:text="${alert_message}" class="alert alert-success"></div>
-        <div th:if="${(param.create[0] == 'failed')}" class="alert alert-danger">Failed to create new consumer</div>
+        <div class="container">
+            <h5 th:if="${(param.create[0] == 'success')}" th:text="${alert_message}" class="alert alert-success">Success!</h5>
+            <h5 th:if="${(param.create[0] == 'failed')}" class="alert alert-danger">Failed to create new consumer</h5>
+        </div>
     </section>
 
     <section th:if="${(param.delete != null)}">
-        <div th:if="${(param.delete[0] == 'success')}" th:text="${alert_message}" class="alert alert-success"></div>
-        <div th:if="${(param.delete[0] == 'failed')}" th:text="${alert_message}" class="alert alert-danger"></div>
+        <div class="container">
+            <h5 th:if="${(param.delete[0] == 'success')}" th:text="${alert_message}" class="alert alert-success">Success!</h5>
+            <h5 th:if="${(param.delete[0] == 'failed')}" th:text="${alert_message}" class="alert alert-danger">Failed to delete consumer</h5>
+        </div>
+    </section>
+
+    <section th:if="${(param.update != null)}">
+        <div class="container">
+            <div th:if="${(param.update[0] == 'success')}" th:text="${alert_message}" class="alert alert-success">Success!</div>
+            <div th:if="${(param.update[0] == 'failed')}" th:text="${alert_message}" class="alert alert-danger">Failed to update consumer</div>
+        </div>
     </section>
 
     <div class="container">
@@ -33,41 +45,105 @@
                 </div>
 
                 <div class="card-body">
-                    <h5 class="card-title">Consumers</h5>
-
-                    <div class="row px-3">
-                        <div class="col-1 offset-md-11">
-                            <button id="btn-add-consumer" class="btn btn-primary badge-pill" type="button" data-bs-toggle="modal" data-bs-target="#modal-create-consumer">ADD</button>
+                    <div class="card-title">
+                        <div class="row">
+                            <div class="col-auto me-auto">
+                                <h5>Consumers</h5>
+                            </div>
+                            <div class="col-auto">
+                                <button id="btn-add-consumer"
+                                        class="btn btn-primary badge-pill"
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modal-add-consumer"
+                                        hx:get="@{/consumers/views/modal-add-consumer}"
+                                        hx-target="#modal-add-consumer"
+                                        hx-swap="innerHTML"
+                                >
+                                    ADD
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <br />
-
-                    <div hx-trigger="load" hx:get="@{/hx/consumers}" hx-swap="outerHTML"></div>
+                    <div hx-trigger="load" hx:get="@{/consumers/views/list}" hx-swap="outerHTML"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
 </main>
 
-<article id="modal-create-consumer">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</article>
+<div id="modal-add-consumer"
+     class="modal fade"
+     data-bs-backdrop="static"
+     tabindex="-1"
+     aria-hidden="true"
+     aria-labelledby="ModalAddConsumerLabel"
+     hx:get="@{/consumers/views/modal-add-consumer}"
+     hx-trigger="load"
+     hx-swap="innerHTML"
+></div>
+
+<div id="modal-update-consumer"
+     class="modal fade"
+     data-bs-backdrop="static"
+     tabindex="-1"
+     aria-hidden="true"
+     aria-labelledby="ModalUpdateConsumerLabel"
+     hx:get="@{/consumers/views/modal-update-consumer}"
+     hx-trigger="load"
+     hx-swap="innerHTML"
+></div>
+
+<script>
+    var updateModal = document.getElementById('modal-update-consumer');
+    updateModal.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        var button = event.relatedTarget;
+
+        // Extract info from data-bs-* attributes
+        var id = button.getAttribute('data-bs-id');
+        var name = button.getAttribute('data-bs-name');
+        var address = button.getAttribute('data-bs-address');
+        var city = button.getAttribute('data-bs-city');
+        var province = button.getAttribute('data-bs-province');
+        var status = button.getAttribute('data-bs-status');
+
+        console.log(id,name,address,city,province,status);
+
+        // Update the modal's content.
+        var input_id = updateModal.querySelector('#input-id');
+        var input_name = updateModal.querySelector('#input-name');
+        var input_address = updateModal.querySelector('#input-address');
+        var input_city = updateModal.querySelector('#input-city');
+        var input_province = updateModal.querySelector('#input-province');
+        var input_status = updateModal.querySelector('#input-status');
+
+        input_id.value = id;
+        input_name.value = name;
+        input_address.value = address;
+        input_city.value = city;
+        input_province.value = province;
+        input_status.value = status;
+
+        updateModal.querySelector('#modal-update-consumer-form').action = button.getAttribute('data-bs-url');
+    });
+
+    function btn_delete_onclick(url) {
+        fetch(url, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+            }
+        })
+        .catch(function(err) {
+            console.error(err);
+        });
+    }
+
+</script>
 </body>
 </html>

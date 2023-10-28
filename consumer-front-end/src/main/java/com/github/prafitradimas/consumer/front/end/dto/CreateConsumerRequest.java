@@ -1,13 +1,20 @@
 package com.github.prafitradimas.consumer.front.end.dto;
 
-public record CreateConsumerRequest(
-    String name,
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    String address,
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class CreateConsumerRequest {
 
-    String city,
+    private String name;
 
-    String province
-) {
+    private String address;
+
+    private String city;
+
+    private String province;
 
 }
